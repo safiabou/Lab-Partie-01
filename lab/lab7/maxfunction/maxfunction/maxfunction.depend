@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1604955028 source:/home/safia/Documents/TP/lab7/maxfunction/testmax.c
+	<stdio.h>
+	<stdlib.h>
+	"max.h"
+
+1604954829 /home/safia/Documents/TP/lab7/maxfunction/max.h
+

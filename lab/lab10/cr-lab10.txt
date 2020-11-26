@@ -1,0 +1,257 @@
+Lab. 10 : Le Makefile
+
+
+1- One copie les fichiers max.c, min.c, var.c, max.h, min,h, var.h et test de la partie 7 en utilisant la commande CP 
+
+2- On crée un makefile permettant de compiler les fichiers sources et de créer un binaire de sortie.
+
+=>  Pour la création du Makefile on utilise la commande : touch Makefile
+=>  Maintenant pour créer les cibles dans notre Makefile, on ouvre le Makefile et on ajoute nos cibles en respectant la règle : 
+NomCible: dépendances
+          règle
+
+Pour notre cas : 
+
+Install:My-binaire
+	mv My-binaire /home/safia
+		
+My-binaire:test.o max.o min.o var.o
+	gcc -Wall test.o max.o min.o var.o -o My-binaire
+
+max.o:	max.c
+	gcc -Wall -c max.c -o max.o 
+min.o:	min.c
+	gcc -Wall -c min.c -o min.o
+var.o:	var.c
+	gcc -Wall -c var.c -o var.o
+
+test.o:	test.c
+	gcc -Wall -c test.c -o test.o
+clean: 
+	rm max.o min.o var.o
+
+
+3- Exécuter les commandes suivantes :
+
+=> make: safia@ubuntu:~/Documents/TP/lab10$ make
+gcc -Wall -c test.c -o test.o
+gcc -Wall -c max.c -o max.o 
+gcc -Wall -c min.c -o min.o
+gcc -Wall -c var.c -o var.o
+gcc -Wall test.o max.o min.o var.o -o My-binaire
+
+=> make install : safia@ubuntu:~/Documents/TP/lab10$ make Install
+gcc -Wall test.o max.o min.o var.o -o My-binaire
+mv My-binaire /home/safia
+
+=> make min.o safia@ubuntu:~/Documents/TP/lab10$ make min.o
+make: « min.o » est à jour.
+
+=> make clean safia@ubuntu:~/Documents/TP/lab10$ make clean
+rm max.o min.o var.o
+
+En tapant la commande "make" il fabrique notre makefile. Et comme on a des dépendances qui sont des cibles d'autres règles toutes les règles sont evaluées.
+en tapant la commande "make min.o" il affiche que le min.o est déjà a jour. En effet, après la commande "make" tout a été compiler donc en tapant la commande "make min.o " il ne recomplitera pas car c'est inutile.
+
+4- On modifie le makefile en rajoutant les macros ( CC = gcc, OBJ = max.o min.o var.o, CC_OPTIONS = )
+
+	CC = gcc
+	OBJ = test.o max.o min.o var.o
+	CC_OPTIONS =
+
+Install:	My-binaire
+	mv My-binaire /home/safia
+		
+My-binaire:	 ${OBJ}
+	${CC} -Wall ${OBJ} -o My-binaire
+max.o:	max.c
+	${CC} -Wall -c max.c -o max.o 
+min.o:	min.c
+	${CC} -Wall -c min.c -o min.o
+var.o:	var.c
+	${CC} -Wall -c var.c -o var.o
+
+test.o:	test.c
+	${CC} -Wall -c test.c -o test.o
+clean: 
+	rm ${OBJ}
+
+
+On compile : 
+
+safia@ubuntu:~/Documents/TP/lab10$ make
+gcc -Wall -c max.c -o max.o 
+gcc -Wall -c var.c -o var.o
+gcc -Wall test.o max.o min.o var.o -o My-binaire
+mv My-binaire /home/safia
+
+
+5- On Redéfinit la macro CC_OPTIONS à –g-Wall sur la ligne de commande qui permet d’appeler le makefile.
+
+	CC = gcc
+	OBJ = test.o max.o min.o var.o
+	CC_OPTIONS = -g -Wall
+
+Install:	My-binaire
+	mv My-binaire /home/safia
+		
+My-binaire:	 ${OBJ}
+	${CC} ${CC_OPTIONS} ${OBJ} -o My-binaire
+max.o:	max.c
+	${CC} ${CC_OPTIONS} -c max.c -o max.o 
+min.o:	min.c
+	${CC} ${CC_OPTIONS} -c min.c -o min.o
+var.o:	var.c
+	${CC} ${CC_OPTIONS} -c var.c -o var.o
+
+test.o:	test.c
+	${CC} ${CC_OPTIONS} -c test.c -o test.o
+clean: 
+	rm ${OBJ}
+
+
+On compile :
+
+safia@ubuntu:~/Documents/TP/lab10$ make
+gcc -Wall -c test.c -o test.o
+gcc -Wall -c max.c -o max.o 
+gcc -Wall -c min.c -o min.o
+gcc -Wall -c var.c -o var.o
+gcc -Wall test.o max.o min.o var.o -o My-binaire
+
+
+
+6- On remplace le nom de la cible et la liste des dépendances par les variables automatiques:
+
+	CC = gcc
+	OBJ = test.o max.o min.o var.o
+	CC_OPTIONS = -g -Wall
+
+Install:	My-binaire
+	mv My-binaire /home/safia
+		
+My-binaire:	 ${OBJ}
+	${CC} ${CC_OPTIONS} ${OBJ} -o $@
+max.o:	max.c
+	${CC} ${CC_OPTIONS} -c $< -o $@ 
+min.o:	min.c
+	${CC} ${CC_OPTIONS} -c $< -o $@
+var.o:	var.c
+	${CC} ${CC_OPTIONS} -c $< -o $@
+
+test.o:	test.c
+	${CC} ${CC_OPTIONS} -c $^ -o $@
+clean: 
+	rm ${OBJ}
+
+
+
+On compile :
+
+safia@ubuntu:~/Documents/TP/lab10$ make
+gcc -Wall test.o max.o min.o var.o -o My-binaire
+mv My-binaire /home/safia
+
+7- On definit une variable DEBUG dans votre makefile ou on rajoute les modifications suivantes :
+• Si DEBUG = yes, la compilation sera en mode debug.
+• Sinon la compilation sera en mode release.
+
+=> Dans notre makefile on fait une condition:
+
+	CC = gcc
+	OBJ = test.o max.o min.o var.o
+	ifeq ($(DEBUG),yes)
+		CC_OPTIONS= -g -Wall
+	else
+		CC_OPTIONS=
+	endif
+
+Install:	My-binaire
+	mv My-binaire /home/safia
+		
+My-binaire:	 ${OBJ}
+	${CC} ${CC_OPTIONS} ${OBJ} -o $@
+max.o:	max.c
+	${CC} ${CC_OPTIONS} -c $< -o $@ 
+min.o:	min.c
+	${CC} ${CC_OPTIONS} -c $< -o $@
+var.o:	var.c
+	${CC} ${CC_OPTIONS} -c $< -o $@
+
+test.o:	test.c
+	${CC} ${CC_OPTIONS} -c $^ -o $@
+clean: 
+	rm ${OBJ}
+
+
+8- On teste les modifications et on vérifie le bon fonctionnement de du Makefile
+safia@ubuntu:~/Documents/TP/lab10$ make
+gcc  -c test.c -o test.o
+gcc  -c max.c -o max.o 
+gcc  -c min.c -o min.o
+gcc  -c var.c -o var.o
+gcc  test.o max.o min.o var.o -o My-binaire
+mv My-binaire /home/safia
+safia@ubuntu:~/Documents/TP/lab10$ make DEBUG=yes
+gcc -g -Wall -c test.c -o test.o
+gcc -g -Wall -c max.c -o max.o 
+gcc -g -Wall -c min.c -o min.o
+gcc -g -Wall -c var.c -o var.o
+gcc -g -Wall test.o max.o min.o var.o -o My-binaire
+mv My-binaire /home/safia
+
+9- On affiche le mode de compilation utilisé en rajoutant  la commande echo dans le makefile
+	CC = gcc
+	OBJ = test.o max.o min.o var.o
+	ifeq ($(DEBUG),yes)
+		CC_OPTIONS= -g -Wall
+	else
+		CC_OPTIONS=
+	endif
+
+Install:	My-binaire
+	mv My-binaire /home/safia
+		
+My-binaire:	 ${OBJ}
+	${CC} ${CC_OPTIONS} ${OBJ} -o $@
+ifeq	($(DEBUG),yes)
+
+	@echo "Génération en mode Debug"
+
+else
+	
+	@echo "Génération en mode Release"
+
+endif	
+
+max.o:	max.c
+	${CC} ${CC_OPTIONS} -c $< -o $@ 
+min.o:	min.c
+	${CC} ${CC_OPTIONS} -c $< -o $@
+var.o:	var.c
+	${CC} ${CC_OPTIONS} -c $< -o $@
+
+test.o:	test.c
+	${CC} ${CC_OPTIONS} -c $^ -o $@
+clean: 
+	rm ${OBJ}
+
+
+=>Compilation:
+
+
+safia@ubuntu:~/Documents/TP/lab10$ make clean
+rm test.o max.o min.o var.o
+safia@ubuntu:~/Documents/TP/lab10$ make DEBUG=yes
+gcc -g -Wall -c test.c -o test.o
+gcc -g -Wall -c max.c -o max.o 
+gcc -g -Wall -c min.c -o min.o
+gcc -g -Wall -c var.c -o var.o
+gcc -g -Wall test.o max.o min.o var.o -o My-binaire
+Génération en mode Debug
+mv My-binaire /home/safia
+safia@ubuntu:~/Documents/TP/lab10$ make DEBUG=no
+gcc  test.o max.o min.o var.o -o My-binaire
+Génération en mode Release
+mv My-binaire /home/safia
+

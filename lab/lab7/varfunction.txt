@@ -1,0 +1,66 @@
+1-Fonction var.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"var.h"
+#include <math.h>
+
+
+void variance (int t[], int n, float *var)
+{
+
+	int sum, Avr;
+	float va;
+	int i,j;
+	int somme=0;
+	sum = 0;
+	for (j=0; j<n; j++)
+	{
+		sum = sum + t[j];
+
+	}
+	Avr= sum / n;
+
+	for(i=1; i<(n+1);i++)
+	{
+
+        printf("%d\n",(t[i]-Avr)*(t[i]-Avr));
+		somme= somme + (t[i]-Avr)*(t[i]-Avr);
+	}
+
+	va=somme/n;
+	*var= va;
+}
+
+
+2-Fonction var.h
+
+#ifndef H_var
+#define H_var
+
+void variance (int t[], int n, float *var);
+
+#endif
+
+3-Fonction testvar.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"var.h"
+
+
+int main ()
+{
+	int nbr_value;
+	float  var;
+	int tab[5]={2,5,7,2,9};
+
+	printf("Nombre d\'elements ? "); 
+	scanf ("%d", &nbr_value);
+
+	variance(tab, nbr_value, &var);
+	printf ("Var = %f\n", var);
+
+	return 0;
+}
+

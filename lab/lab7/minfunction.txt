@@ -1,0 +1,54 @@
+1-Fonction min.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"min.h"
+
+
+void find_min (int t[], int n, int *min)
+{
+	int min_value;
+	int i;
+	min_value = t[0];
+	for (i=0; i<n; i++)
+	{
+		if (t[i] < min_value)
+		{
+			min_value = t[i];
+		}
+	}
+	
+	*min = min_value;
+}
+
+
+2-Fonction min.h
+
+#ifndef H_min
+#define H_min
+
+void find_min (int t[], int n, int *min);
+
+
+#endif
+
+3-Fonction testmin.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"min.h"
+
+int main ()
+{
+	int nbr_value;
+	int  min;
+	int tab[5]={2,5,7,2,9};
+
+	printf("Nombre d\'elements ? "); 
+	scanf ("%d", &nbr_value);
+
+	find_min(tab, nbr_value, &min);
+	printf ("Min = %d\n", min);
+
+	return 0;
+}

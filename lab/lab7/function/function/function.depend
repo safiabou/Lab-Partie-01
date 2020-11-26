@@ -1,0 +1,30 @@
+# depslib dependency file v1.0
+1604954956 source:/home/safia/Documents/TP/lab7/function/max.c
+	<stdio.h>
+	<stdlib.h>
+	"max.h"
+
+1604954829 /home/safia/Documents/TP/lab7/function/max.h
+
+1604958551 source:/home/safia/Documents/TP/lab7/function/min.c
+	<stdio.h>
+	<stdlib.h>
+	"min.h"
+
+1604960333 /home/safia/Documents/TP/lab7/function/min.h
+
+1605775175 source:/home/safia/Documents/TP/lab7/function/test.c
+	<stdio.h>
+	<stdlib.h>
+	"var.h"
+	"max.h"
+	"min.h"
+
+1604960395 /home/safia/Documents/TP/lab7/function/var.h
+
+1604960134 source:/home/safia/Documents/TP/lab7/function/var.c
+	<stdio.h>
+	<stdlib.h>
+	"var.h"
+	<math.h>
+

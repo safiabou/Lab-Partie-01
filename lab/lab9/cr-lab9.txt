@@ -1,0 +1,137 @@
+
+Lab 9 : Création et utilisation des bibliothèques dynamiques
+
+
+
+1- Copier les fichiers max, min et var (.h et .c) et main que nous avons développé lors de la partie 7.
+
+2- Compiler les fichiers max.c, min.c et var.c en faisant appel à l’option –fPIC (Sans faire d’édition de lien).
+safia@ubuntu:~/Documents/TP/lab9$ gcc -fPIC -c max.c min.c var.c
+
+3- Créer la bibliothèque partagée en faisant appel à l’option -shared.
+safia@ubuntu:~/Documents/TP/lab9$ gcc -shared -o libdyna.so max.o min.o var.o
+
+
+4- Déplacer la bibliothèque créé à /opt/lib :
+safia@ubuntu:~/Documents/TP/lab9$ sudo mv /home/safia/Documents/TP/lab9/libdyna.so /opt/lib
+On verifie si la bibliothèque a été déplacé :
+safia@ubuntu:/opt/lib$ ls
+
+libdyna.so  liboutils.a  var.o
+
+5- Compilez le main.c en spécifiant le chemin des bibliothèques:
+
+Dans mon cas j'ai nommé le main.c (test.c au TP7)
+safia@ubuntu:~/Documents/TP/lab9$ gcc test.c -L/opt/lib -ldyna -o test.exe
+
+6- Lors de l'execusion il ne trouve pas les fichiers objets, donc le programme ne s'execute pas.
+safia@ubuntu:~/Documents/TP/lab9$ ./test.exe
+=> Sois l'éditeur de lien ne connait pas le chemin de la bibliothèque partagées , sois le binaire de la fonction n'existe pas. ( a confirmer dans la question suivante)
+
+7- On affiche le contenue de la variable d'environnement LD_LIBRARY_PATH
+safia@ubuntu:~/Documents/TP/lab9$ echo $LD_LIBRARY_PATH
+En faisant appel à la variable d’environnement LD_LIBRARY_PATH on remarque que le contenu est vide
+=> la variable d'environnement $LD_LIBRARY_PATH indique le Chemin de recherche de bibliothèques partagées. Dans notre cas il est vide la raison la quelle le programme génère une erreur lors de l'execusion.
+
+8- Ajouter le chemin de votre bibliothèque à cette variable.
+safia@ubuntu:~/Documents/TP/lab9$ export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/lib/
+
+
+9- On Compile  et on exécute à nouveau :
+safia@ubuntu:~/Documents/TP/lab9$ gcc test.c -L/opt/lib -ldyna -o test.exe
+safia@ubuntu:~/Documents/TP/lab9$ ./test.exe
+
+=> Le programme s'exécute. Et le chemin a été ajouté 
+safia@ubuntu:~/Documents/TP/lab9$ echo $LD_LIBRARY_PATH
+:/opt/lib/
+Cependant comme lors du lab6 si on ferme et on ouvre a nouveau le terminal le programme ne s'exécute pas .
+
+safia@ubuntu:~/Documents/TP/lab9$ gcc test.c -L/opt/lib -ldyna -o test.exe
+safia@ubuntu:~/Documents/TP/lab9$ ./test.exe
+./test.exe: error while loading shared libraries: libdyna.so: cannot open shared object file: No such file or directory
+
+Solution pour ça : rajouter le chemin de la bibilothéque d’une maniére permanante dans la variable d’environnement LD_LIBRARY_PATH c'est a dire ajouter la commande dans le fichier .bashrc.
+
+10- Rajouter le chemin de la bibilothéque d’une maniére permanante dans la variable d’environnement LD_LIBRARY_PATH puis on s'assure du bon fonctionnement de notre programme.
+=> safia@ubuntu:~/Documents/TP/lab9$ vim .bashrc
+=> Ajouter  "export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:/opt/lib/" Dans le fichier .bashrc
+
+11- Localiser la bibliothèque math « libm.so »
+
+safia@ubuntu:~/Documents/TP/lab9$ locate libm.so
+On remarque bien que la bibliothèque math se trouve dans plusieurs endroits.
+
+/lib/x86_64-linux-gnu/libm.so.6
+/snap/core18/1885/lib/i386-linux-gnu/libm.so.6
+/snap/core18/1885/lib/x86_64-linux-gnu/libm.so.6
+/snap/core18/1932/lib/i386-linux-gnu/libm.so.6
+/snap/core18/1932/lib/x86_64-linux-gnu/libm.so.6
+/snap/gnome-3-34-1804/36/usr/lib/x86_64-linux-gnu/libm.so
+/snap/gnome-3-34-1804/60/usr/lib/x86_64-linux-gnu/libm.so
+/snap/snapd/9607/lib/x86_64-linux-gnu/libm.so.6
+/snap/snapd/9721/lib/x86_64-linux-gnu/libm.so.6
+/usr/lib/x86_64-linux-gnu/libm.so
+
+12- Identifier le soname et le nom réel de la bibliothèque math.
+
+safia@ubuntu:~/Documents/TP/lab9$ locate libm-
+/lib/x86_64-linux-gnu/libm-2.27.so
+/snap/core18/1885/lib/i386-linux-gnu/libm-2.27.so
+/snap/core18/1885/lib/x86_64-linux-gnu/libm-2.27.so
+/snap/core18/1932/lib/i386-linux-gnu/libm-2.27.so
+/snap/core18/1932/lib/x86_64-linux-gnu/libm-2.27.so
+/snap/gnome-3-34-1804/36/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h
+/snap/gnome-3-34-1804/36/usr/lib/x86_64-linux-gnu/libm-2.27.a
+/snap/snapd/9607/lib/x86_64-linux-gnu/libm-2.23.so
+/snap/snapd/9721/lib/x86_64-linux-gnu/libm-2.23.so
+/usr/include/x86_64-linux-gnu/bits/libm-simd-decl-stubs.h
+/usr/lib/debug/lib/x86_64-linux-gnu/libm-2.27.so
+/usr/lib/x86_64-linux-gnu/libm-2.27.a
+
+on peut aussi accéder à /lib/x86_64-linux-gnu via la commande : safia@ubuntu:~$ cd /lib/x86_64-linux-gnu/
+Puis on utilise la commande : safia@ubuntu:/lib/x86_64-linux-gnu$ ls -lrt libm.so.6
+lrwxrwxrwx 1 root root 12 sept.  2 02:18 libm.so.6 -> libm-2.27.so
+
+
+=> Le soname de la bibliothèque math est :libm.so.6
+=> Le real name de la bibliothèque math est : libm-2.27.so
+
+13- Procédez à copier cette bibliothèque dans usr/lib et enlever les droits d’écriture à notre bibliothèque.
+safia@ubuntu:~$ sudo cp /opt/lib/libdyna.so /usr/lib
+[sudo] Mot de passe de safia : 
+safia@ubuntu:~$ cd /usr/lib
+safia@ubuntu:/usr/lib$ ls ( on trouve bien notre bibliothèque dans la liste)
+
+Pour les droit d'accées : 
+safia@ubuntu:/usr/lib$ sudo chmod -r libdyna.so
+safia@ubuntu:/usr/lib$ ls -l ( pour verifier )
+
+14- Mettre à jour le chargeur la cache du ld.so via la commande ldconfig pour que notre bibliothèque soit prête à l’utilisation.
+safia@ubuntu:/usr/lib$ sudo ldconfig
+
+15- Vérifier que ça été bien fait en appelant l’option –p de ldconfig et via la commande grep.
+
+safia@ubuntu:/usr/lib$ ldconfig -p | grep libdyna
+	libdyna.so (libc6,x86-64) => /usr/lib/libdyna.so
+
+16- S'assurer de l'existence de la bibliothèque dans /usr/lib avec la commande ldd.
+safia@ubuntu:/usr/lib$ sudo ldd libdyna.so
+	linux-vdso.so.1 (0x00007ffdcf76f000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f777d8d8000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f777decb000)
+
+17-Désactiver la variable d’environnement LD_LIBRARY_PATH.
+on supprime directement dans le fichier .bashrc
+
+18-Compilez le main en indiquant uniquement le nom de la bibliothèque via l’option -l
+safia@ubuntu:~/Documents/TP/lab9$ sudo gcc test.c -ldyna -o test.exe
+
+19- Exécusion et vérification du bon fonctionnement de notre code
+safia@ubuntu:~/Documents/TP/lab9$ ./test.exe
+
+
+
+
+
+
+

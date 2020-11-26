@@ -1,0 +1,140 @@
+LAB5 : Shell - Script
+
+
+
+1- Création d'un nouveau fichier script nommé master.sh
+safia@ubuntu:~/Documents/TP/lab5$ touch master.sh
+Dans le script on indique le type de shell qu'on va utiliser, on ouvre le script et on ecrit
+
+#!/bin/bash
+ls /home/safia/Documents/TP/lab4 # lister les fichiers se trouvant dans le répertoire utilisé dans la partie4 et le chemin d'accès au répertoire
+master_syscom="Hello Embedded Linux" # Creation d'une variable qui s'appelle master syscom ou on a stocker Hello Emabedded Linux
+
+
+- Pour rajouter le droit d'execusion : safia@ubuntu:~/Documents/TP/lab5$ chmod u+rx master.sh
+- Pour exécuter le script : safia@ubuntu:~/Documents/TP/lab5$ ./master.sh
+5AS05-partie4  history.txt  lab4.txt
+
+
+2- Script qui lit 2 nombres entrées en arguments:
+#!/bin/sh
+
+#echo "please enter your first_number : number1"
+read -p "please enter your first_number :" number1
+#echo "please enter your second_number : number2"
+read -p "please enter your second_number :" number2
+
+
+if [ $number1 -lt $number2 ]
+then
+        echo "number1 is less than number2"
+
+elif [ $number1 -gt $number2 ]
+then
+        echo "number1 is greater then number2 "
+
+else
+                echo "number1 is equal to the number2 "
+        fi
+- Pour changer le droit d'execusion : safia@ubuntu:~/Documents/TP/lab5$ chmod u+rx script2.sh
+- Pour executer le script :safia@ubuntu:~/Documents/TP/lab5$ ./script2.sh
+
+please enter your first_number :4
+please enter your second_number :4
+number1 is equal to the number2 
+safia@ubuntu:~/Documents/TP/lab5$ ./script2.sh
+please enter your first_number :2
+please enter your second_number :5
+number1 is less than number2
+safia@ubuntu:~/Documents/TP/lab5$ ./script2.sh
+please enter your first_number :8
+please enter your second_number :1
+number1 is greater then number2 
+
+
+3- Un script shell qui liste tous les dossiers du repertoire de la partie 4:
+
+Le script :
+
+#!/bin/sh
+for files in /home/safia/Documents/TP/lab4/* # Parcourir tous les fichiers et repertoires de la partie 4
+do
+        if [ -d $files ]                # On verifie si on a bien un repertoire
+        then
+                ls $files               # Si oui, on liste tous les fichiers du repertoire 
+        fi
+done
+
+
+L'execusion:
+
+safia@ubuntu:~/Documents/TP/lab5$ chmod u+rx script3.sh
+safia@ubuntu:~/Documents/TP/lab5$ ./script3.sh
+answering-machine.txt  Microsoft     noyau.v2	test-commande-locate
+history.txt	       noyau.v1      README.md	update.patch
+lab4.txt	       noyau.v1.rej  sardar
+
+4- Modification du script afin de préciser en paramètre le chemin du repertoire que l'ont souhaite lister
+
+Le script:
+
+#!/bin/sh
+for files in cd '/home/safia/Documents/TP/lab4/5AS05-partie4 '
+do
+   if [ -d $files ]
+   then
+     ls $files
+   fi
+
+L'execusion:
+
+safia@ubuntu:~/Documents/TP/lab5$ ./script4.sh
+answering-machine.txt  Microsoft     noyau.v2	test-commande-locate
+history.txt	       noyau.v1      README.md	update.patch
+lab4.txt	       noyau.v1.rej  sardar
+
+5- Modification du script afin de renvoyer un message d'erreur si le chemin passé en paramètre n'est pas un répertoire valide:
+
+Le script :
+
+#!/bin/sh
+for fichiers in  cd '/home/safia/Documents/TP/lab4/5AS05-partie4'
+do
+   if [ -d $fichiers ]
+   then
+     ls $fichiers
+     else
+                echo "le chemin passé n'est pas un repertoire valide "
+
+   fi
+done
+
+L'execusion:
+safia@ubuntu:~/Documents/TP/lab5$ chmod u+rx script5.sh
+safia@ubuntu:~/Documents/TP/lab5$ ./script5.sh
+le chemin passé n'est pas un repertoire valide 
+answering-machine.txt  Microsoft     noyau.v2	test-commande-locate
+history.txt	       noyau.v1      README.md	update.patch
+lab4.txt	       noyau.v1.rej  sardar
+
+6- 
+Le script:
+
+#!/bin/sh
+mkdir photos
+cal=1
+while [ $cal -le $1 ]
+do
+        wget "https://xkcd.com/$cal"
+        url=$(grep -o "http.*jpg" $cal)
+        wget $url > "./photos/$cal"
+        cal=$((cal+1))
+done
+
+eog ./photos
+~            
+
+L'execusion:
+afia@ubuntu:~/Documents/TP/lab5/Script 6$ chmod u+rx script6.sh
+safia@ubuntu:~/Documents/TP/lab5/Script 6$ ./script6.sh
+

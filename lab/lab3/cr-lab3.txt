@@ -1,0 +1,126 @@
+Lab 3 : Commandes Shell Fondamentales
+
+
+1- On ouvre une session sous ubuntu
+2- On démarre un terminal et on crée un répertoire qu'on nomme "lab3" en tapant la commande: mkdir lab3
+3- On recupère le dossier du Lab 3  en tapant la commande : 
+git clone https://github.com/khachicha/5AS05-partie3.git
+
+4- Afficher la liste des fichiers : on utilise la commande ls
+answering-machine.txt  Microsoft  README.md  sardar
+=> On a donc 1 répertoire  nommé "sardar" et 3 fichiers "answering-machine.txt  Microsoft  README.md"
+Puis on utilise la commande ls -lrt pour relevé la taille des fichiers/répertoires.
+ 24  README.md
+ 34359 Microsoft
+ 4096  sardar
+ 70408 answering-machine.txt
+
+
+5- La taille du fichier sardar n'est pas correcte car en utilisant la commande ls -lrt linux considère un répertoire comme un fichier.
+
+6- La taille du fichier Microsoft 
+en Utilisant Du command : 36K
+En ulisant ls -lrt command :34359 oct
+=> la commande du (disk usage) permet de connaître l’espace utilisé par des fichiers et obtenir le volume (nombre de blocs) d'un fichier.
+   la commande ls -lrt donne la taille du fichier.
+
+7- On affiche les information correspondantes au fichier Microsoft "stat microsoft"
+
+8- Pour lister tous les fichiers on tape la commande  : ls -a 
+  pour lister juste les fichiers cachés on tape la commande : ls -d .*
+  Dans notre cas on a un fichier caché qui est ".lightbulb"
+
+9- Fichier plus ancien en premier et plus recent en dernier => ls -lrt
+10- ls -s   => l'ordre des fichiers  le plus grand en premier & ls -r c'est l'inverse
+sardar  README.md  Microsoft  answering-machine.txt
+
+11- Afficher le contenue du fichier : cat answering-machine.txt
+
+12- Afficher le contenue avec l'outil PLUS => cat answering-machine.txt | more
+
+13- Installation avec apt l'éditeur vim :
+sudo apt install vim
+
+14- Pour rajouter un texte à la fin du fichier il faut : 
+- Tout d'abord accéder à 5AS05-partie3 en tapant : cd 5AS05-partie3
+- Afficher le fichier => vim answering-machine.txt
+- On clique "i" pour insérer et puis on ecrit ""welcome systemes Communicants"
+- On sauvegarde et on quitte on tapant "echap  :  wq "
+
+15- Pour supprimer le mot : 
+- chercher le mot  en tapant la commande: /gravelly
+- supprimer : en tapant x 
+
+16- Sauvegarder : echap : w
+
+17- On utilise la commande /planet pour passer à la partie ou se trouve le mot planet puis avec la commande n on peut se déplacer aux parties contenant le mot planet
+
+19- On utilise la commande ?BEEP pour chercher le mot "BEEP", et la commande n pour retrouver les autres occurrences du mot beep.
+
+20- Pour afficher 20 dernieres lignes du fichier sardar3. 
+acceder a sardar : cd sardar
+puis tapper la commande: tail -20 sardar3.txt
+
+21- Chercher un mot dans un fichier : grep + le mot+ le nom du fichier
+donc dans notre cas : grep trust Microsoft
+
+22- Chercher un mot dans tous les fichiers du repertoir : grep -r + mot +./
+donc notre cas : 
+grep -r money ./
+
+23- On cherche money avec la commande grep -i on affiche money avec majuscule et miniscule.
+
+24- Pour modifier le fichier .lightbulb pour qu'il ne soit plus caché on utilise la commande : mv .lightbulb lightbulb
+
+25- On entre dans le répertoire sardar avec la commande cd sardar.Puis afficher le nom du répertoire actuel  :  pwd   (print working directory)
+
+26- Pour déplacer le fichier sardar3.txt depuis son répertoire vers le répertoire parent : mv sardar3.txt lab3
+
+27- Retourner vers le répertoire parent : cd ..
+
+28- Supression du fichier Microsoft : 
+rm Microsoft
+
+29- Pour créer un répertoire archive : aller au répertoire puis : 
+tar -cvf "nommer.tar" " le nom du fichier qu'on veut archiver"
+
+30- Pour créer des liens symboliques permettant de faire apparaître les fichiers du répertoire sardar/ dans le répertoire courant également on tape la commande 
+ln -s sardar test.
+
+31- On fait la commande ls -l pour afficher les fichiers dans le répertoire courant et la  voit bien les liens symboliques qui pointent vers les fichiers
+
+32- On accède a sardar et suprimant le fichier sardar2.txt via la commande : rm sardar2.txt, et la avec la commande ls-lrt on voit bien que ce dernier est en rouge donc le lien est cassé.
+
+33- On ouvre le fichier sardar1.txt avec la commande vim.Cependant on ne peut pas écrire à la fin " MASTER SC "  car on a pas les droit d'accés.
+
+34- Avec la commande ls -l on affiche les droits d'accès des differents fichiers et on voit bien qu'on a pas le droit d'écrire dans le fichier.
+
+35- Droit d'accées des fichiers : chmod 777 sardar1.txt ( dans le cas ou on veut ajouter droit d'ecrire au group)
+
+36- Création une archive .tar.bzd2 : tar jcvf 5AS05-partie3.tar.bz2 5AS05-partie3
+
+37- Lister les fichiers sans decompresser: tar jtvf 5AS05-partie3.tar.bz2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

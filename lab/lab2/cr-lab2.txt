@@ -1,0 +1,48 @@
+                              LAB2 : GIT
+
+
+GIT configuration
+1- Install software package that we need :
+safia@ubuntu:~/Documents/TP$ sudo apt install git gitk git-email
+
+2- GIT configuration puis on vérifie que les informations ont été pris en compte
+
+git config--global user.name "[prenom]"
+git config--global user.email "[me@mydomain.net]"
+
+Lab
+1- Création d'un répertoire : safia@ubuntu:~/Documents/TP$ mkdir lab2
+
+2- Création d'un fichier dans le repertoire lab2: 
+safia@ubuntu:~/Documents/TP/lab2$ touch safia
+puis ouvrir ce fichier et ecrire " Hello M2 syscom" puis sauvegarder 
+
+3- Mentionner que ce repertoire sera un git repository 
+safia@ubuntu:~/Documents/TP/lab2$ git init
+
+4- Utilisation de la commande git status pour voir l'état du fichier
+safia@ubuntu:~/Documents/TP/lab2$ git status
+
+5- Utilisation de la commande git add pour rajouter le fichier puis on retappe la commande git status pour verifier si le fichier a été ajouté à l'index ou pas
+safia@ubuntu:~/Documents/TP/lab2$ git add .
+safia@ubuntu:~/Documents/TP/lab2$ git status
+
+6- Utilisation de la commande git commit -m:
+safia@ubuntu:~/Documents/TP/lab2$ git commit -m "lab2"
+
+7- Création d'un compte sur le site git HUB et un nouveau repository
+
+8- Connexion de notre local repository au remot repository:
+safia@ubuntu:~/Documents/TP/lab2$ git remote add origin https://github.com/safiabou/Tp2.git
+safia@ubuntu:~/Documents/TP/lab2$ git push -u origin master
+
+9- Création d'un fichier README.md
+
+10- Utilisation de la commande git pull pour mettre à jour le repertoire locale : safia@ubuntu:~/Documents/TP/lab2$ git pull
+
+11- Création d'un clone du répertoire que nous avons créer
+safia@ubuntu:~/Documents$ git clone https://github.com/safiabou/Tp2.git
+
+
+
+

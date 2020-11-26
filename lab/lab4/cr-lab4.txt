@@ -1,0 +1,106 @@
+
+
+                              LAB 4 : Commandes Shell Avancées
+
+1- Récupération des souces de la partie 4 
+safia@ubuntu:~/Documents/TP/lab4$ git clone https://github.com/khachicha/5AS05-partie4.git
+
+2- Utlisation de la commande "history" pour voir toutes les commandes qui ont été deja tapés
+safia@ubuntu:~/Documents/TP/lab4$ history
+
+3- Sauvegarder l'historique dans un fichier
+safia@ubuntu:~/Documents/TP/lab4$ history > history.txt
+
+4- Mettre bout à bout tous les fichiers du répertoire sardar/dans le fichier sardar_power.txt sans quitter le répertoire courant
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$ touch sardar_power.txt   = > Pour créer le fichier sardar_power.txt
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$ cat sardar1.txt  sardar2.txt  sardar3.txt >> sardar_power.txt 
+=> pour mettre bout à bout les trois fichiers de sardar dans le nouveau fichier crée sardar_power.txt
+
+5- Le nombre de lignes et mots et de caractères dans ce nouveau fichier:
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$ wc sardar_power.txt
+  1980  16783 101780 sardar_power.txt
+nombre de lignes :1980
+nombre de mots: 16783
+nombre de charactères: 101780 ( octects)
+
+6- Afficher toutes les lignes qui contiennent singh dans ce fichier :
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$ grep -i "singh" sardar_power.txt
+ => grep pour affiche toutes les lignes contenant snight dans le fichier sardar_power.txt
+ => le i pour l'indifférence de majuscules / minuscules
+
+7- Suppression du fichier sardar_power.txt
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$ rm sardar_power.txt
+
+8- En une seule ligne de commande on affiche toutes les lignes des fichiers du repertoire sardar qui contiennent le singh
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$ grep -i singh *
+
+9- Commande pour compter le nombre de lignes obtenues 
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$ grep -ri singh . | wc -l
+ou 
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$ grep -ri singh sardar1.txt  sardar2.txt  sardar3.txt| wc -l
+Resultat : 123
+
+grep-ri : c'est pour parcourir les fichiers donnés et afficher les lignes qui correspondent de maniere recurssive
+wc-l : l’option -l permet d’avoir le nombre de lignes du fichier.
+
+10- La commande pour compter que les lignes qui contiennent à la fois santa et singh sans faire la difference entre majuscules et minuscules:
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$ grep -ri singh | grep -ri santa | wc -l 
+Resultat: 114
+
+11- La commande pour compter que les lignes qui continennt santa, singh mais pas banta:
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$ cat *.txt | grep -i singh | grep -i santa | grep -iv banta | wc -l
+ou 
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4/sardar$  grep -i singh ./* |  grep -i santa | grep -iv banta | wc -l
+
+12- Trouver tous les fichiers dans le repertoir 5AS05-partie4 qui finisse par .txt
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4$ find . -name "*.txt"
+./answering-machine.txt
+./sardar/sardar2.txt
+./sardar/sardar1.txt
+./sardar/sardar3.txt
+
+13- Copier le fichier answering-machine vers un nouveau fichier appellé test-commande-locate:
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4$ cp answering-machine.txt test-commande-locate
+Commande pour lancer la commande locate afin de chercher ce fichier
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4$ locate test-commande-locate
+Il n'affiche rien.
+
+=> Explication: Lorsque on lance la commande locate, il ne va pas chercher le fichier au sein de l'orborescence, mais au sein d’une base de données contenant la liste des fichiers existants. Dans notre cas on vient de créer le fichier "test-commande-locate", donc il n'est pas dans la base de donner c'est pour  cela que la commande locate n'affiche rien. Pour cela il faut réactualiser la base de données à l’aide de la commande updatedb.
+
+14- Lancer la commande updatedb: safia@ubuntu:~/Documents/TP$ sudo updatedb
+safia@ubuntu:~/Documents/TP$ locate test-commande-locate
+Aprés avoir lancer cette commande, on a actualisé la base données. Donc on lançant a nouveau la commande locate on aura tous les fichiers sur notre système contenant test-commande-locate
+
+
+15- lancer la commande permettant de comparer le contenue de deux fichiers noyau.V1 et noyau.V2
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4$ diff noyau.v1 noyau.v2
+25,26c25,26
+< PATCHLEVEL = 01
+< SUBLEVEL = -rc1
+---
+> PATCHLEVEL = 02
+> SUBLEVEL = -rc2
+54c54
+< export	SHELL CC GCC
+---
+> export	SHELL 
+
+=> la difference entre les deux fichiers
+la ligne 25 et 26 : le fichier noyeau.v1 a PATCHLEVEL = 01 et SUBLEVEL = -rc1  cependant le fichier noyeau.v2 a PATCHLEVEL = 02 SUBLEVEL = -rc2 .Aussi dans la ligne 54 :  le noyeau.v1  a export	SHELL CC GCC et le noyeau.v2 a export SHELL et le noyeau.v1.
+< indique moin et > indique plus.
+
+16- Création d'un patch permettant de mettre à jour le noyeau.v1 vers noyeau.v2
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4$ diff noyau.v1 noyau.v2 > update.patch
+Application du nouveau patch sur le fichier noyau.v1 afin de verifier 
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4$ patch  noyau.v1 update.patch
+safia@ubuntu:~/Documents/TP/lab4/5AS05-partie4$ diff noyau.v1 noyau.v2
+=> Il n'affiche rien donc les deux fichiers sont identiques.
+
+
+
+
+
+
+
+
+

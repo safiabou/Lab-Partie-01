@@ -1,0 +1,53 @@
+1-Fonction max.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"max.h"
+
+
+void find_max (int t[], int n, int *max)
+{
+	int max_value;
+	int i;
+	max_value = t[0];
+	for (i=0; i<n; i++)
+	{
+		if (t[i] > max_value)
+		{
+			max_value = t[i];
+		}
+	}
+	
+	*max = max_value;
+}
+
+2-Fonction max.h
+
+#ifndef H_max
+#define H_max
+
+void find_max (int t[], int n, int *max);
+
+#endif
+
+
+3-Fonction testmax.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"max.h"
+
+int main ()
+{
+	int nbr_value;
+	int  max;
+	int tab[5]={2,5,7,2,9};
+
+	printf("Nombre d\'elements ? "); 
+	scanf ("%d", &nbr_value);
+
+	find_max(tab, nbr_value, &max);
+	printf ("Max = %d\n", max);
+
+	return 0;
+}

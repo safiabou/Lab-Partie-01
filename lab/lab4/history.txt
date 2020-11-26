@@ -1,0 +1,212 @@
+    1  q
+    2  a
+    3  aa
+    4  a
+    5  aa
+    6  sudo apt-get install vim
+    7  sudo apt install libssl-dev bison flex
+    8  sudo apt install qt5-default pkg-config
+    9  ls
+   10  *
+   11  ls
+   12  time
+   13  ls
+   14  time
+   15  date
+   16  ls
+   17  date
+   18  ls
+   19  *
+   20  ls
+   21  cd Desktop/
+   22  ls
+   23  *
+   24  ls
+   25  sudo apt install git gitlk git-email
+   26  sudo apt install git gitk git-email
+   27  sudo reboot
+   28  git config --global user.name "safia"
+   29  git config --global user.name "[safia]"
+   30  git config --global user.safia
+   31  sudo apt install git gitk git-email
+   32  git config --global user name "safia"
+   33  git config --global user.name "safia"
+   34  git congit --global user.email"safiabouchafa@gmail.com"
+   35  git config --global user.email"safiabouchafa@gmail.com"
+   36  git config --global user.name
+   37  git config --global user.email
+   38  git config  --global user.email safiabouchafa@gmail.com
+   39  git config --global user.email
+   40  mkdir
+   41  mkdir lab2
+   42  cd lab2
+   43  vim
+   44  touch safia.txt
+   45  cd lab2
+   46  vim safia
+   47  git init
+   48  git add safia.txt
+   49  git status
+   50  git commit -m "test"
+   51  git remote add origin https://github.com/safiabou/lab2.git
+   52  git push -u origin master
+   53  git pull
+   54  cd home
+   55  cd . ./
+   56  cd ../
+   57  cd documents
+   58  cd Documents
+   59  git clone https://github.com/safiabou/lab2.git
+   60  git show
+   61  cd Home
+   62  cd../
+   63  cd
+   64  mkdir lab3
+   65  git clone https://github.com/khachicha/5AS05-partie3.git
+   66  mv 5AS05-partie3 lab3
+   67  cd lab3
+   68  ls-lrt
+   69  ls -lrt
+   70  cd 5AS05-partie3
+   71  ls -lrt
+   72  cd lab3
+   73  cd
+   74  cd lab3
+   75  du
+   76  ls
+   77  stat
+   78  du
+   79  cd Microsoft
+   80  cd 5AS05-partie3
+   81  du
+   82  du Microsoft
+   83  ls -lrt
+   84  ls -sh
+   85  du -sh
+   86  stat Microsoft
+   87  ls -a
+   88  ls -lart
+   89  ls -lrt
+   90  ls -l
+   91  ls -c
+   92  ls- s
+   93  ls -s
+   94  ls -r
+   95  cat answering-machine.txt
+   96  cat answering-machine.txt | more
+   97  sudo apt install vim
+   98  vim afficher answering-machine.txt
+   99  vim answering-machine.txt
+  100  cd sardar
+  101  taille -20 sardar3.txt
+  102  tail -20 sardar3.txt
+  103  cd
+  104  cd lab3
+  105  git init
+  106  git add lab3.txt
+  107  cat answering-machine.txt
+  108  cat answering-machine.txt | more
+  109  sudo apt install vim
+  110  SPI
+  111  spi
+  112  sudo apt install vim
+  113  vim answering-machine.txt
+  114  cd sardar
+  115  tail-20 sardar.txt
+  116  tail - 20 sardar.txt
+  117  cd sardar3.txt
+  118  cd sardar3
+  119  cat sardar3.txt
+  120  cd sardar
+  121  cat sardar3.txt
+  122  cd - 
+  123  cat Microsoft.txt
+  124  cat Microsoft
+  125  grep trust
+  126  grep "trust"
+  127  grep [trust]in /Microsoft
+  128  gep [trust] Microsoft
+  129  grep [trust] Microsoft
+  130  grep [money] 5AS05-partie3 
+  131  grep [money]
+  132  grep [money] ./
+  133  grep r [money] ./
+  134  grep -r money ./
+  135  grep money
+  136  grep "\$" *.txt
+  137  ls -a
+  138  mv .lightbulb lightbulb
+  139  ls -a
+  140  cd sardar/ .
+  141  cd ..
+  142  cd sardar 
+  143  cd 5AS05-partie3
+  144  cd sardar
+  145  pwd
+  146  mv sardar3.txt lab3
+  147  mv sardar3.txt ~
+  148  mv lab3 sardar3.txt
+  149  mv sardar3.txt ~
+  150  cd ..
+  151  rm Microsoft
+  152  cd ..
+  153  cd /
+  154  tar -cvf sardar.tar sardar/
+  155  tar -cvf archive.tar sardar/
+  156  cd lab3
+  157  tar -cvf archive.tar lab3/
+  158  cd lab3
+  159  ls
+  160  cd
+  161  ls
+  162  cd lab3
+  163  tar -cvf lab3.tar lab3/
+  164  tar -cvf archive.tar lab3/
+  165  cd
+  166  tar -cvf archive.tar mab3/
+  167  tar -cvf archive.tar lab3/
+  168  tar -cvf sardar.tar sardar/
+  169  ls
+  170  cd lab3
+  171  tar -cvf sardar.tar sardar/
+  172  rm sardar.tar
+  173  rm archive.tar
+  174  tar -cvf archive.tar sardar/
+  175  cd sardar
+  176  cd 5AS05-partie3
+  177  cd sardar
+  178  ln -s
+  179  ln -s sardar test
+  180  ls
+  181  rm sardar2.txt
+  182  ls
+  183  cd sardar1.txt
+  184  cat sardar.txt
+  185  cat sardar1.txt
+  186  vim sardar2.txt
+  187  vim sardar1.txt
+  188  ls -l
+  189  chmod u-w sardar1.txt
+  190  ls -l
+  191  cd -
+  192  tar jcvf 5AS05-lab3.tar.bz2 5AS05-lab3
+  193  cp lab3
+  194  cd -
+  195  cd ..
+  196  git init
+  197  git status
+  198  git add .
+  199  git status
+  200  git commit -m
+  201  git remote add origin [https://github.com/safiabou/lab3.git]
+  202  git remote remove origin
+  203  git remote add origin [https://github.com/safiabou/lab3.git]
+  204  git push -u origin master
+  205  git remote remove origin
+  206  git commit -m "lab3"
+  207  git remote add origin https://github.com/safiabou/lab3.git
+  208  git push -u origin master
+  209  git clone https://github.com/khachicha/5AS05-partie4.git
+  210  touch commentlab4
+  211  history
+  212  history > savedhistory.txt

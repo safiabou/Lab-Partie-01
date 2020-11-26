@@ -1,0 +1,11 @@
+Lab 1: Création d'un compte Slack et abonnement au channel des TPs
+
+1-Envoyer un mail à monsieur Hachicha pour demander une invitation.
+
+2-Ouvrir la boite mail pour accepter l'invitation et créer un compte slack avec notre nom de famille comme login pour accéder MU5SP05.
+
+3-Abonnement au channel correspondant à la partie que nous sommes entrain de réaliser avec l'onglet add to channel et on choisit le channel correspondant à la partie que nous sommes entrain de traiter.
+
+4- On vérifie qu'on arrive à échanger avec nos collègues et notre prof à travers le channel.
+
+5-Pour la suite des Tps, on crée dans notre bureau un répertoire de travail pour chaque lab.

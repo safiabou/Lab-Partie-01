@@ -1,0 +1,172 @@
+ LAB 8 : Création et utilisation des bibliothèques statiques
+
+
+1- Pour commencer on copie les fichiers sources des deux fonctions max.c, max.h, min.c et min.h en utilisant la commande cp vers le repertoire lab8.
+
+2- Lancement de la compilation des deux fichiers max.c et min.c sans faire d’édition de liens:
+
+safia@ubuntu:~/Documents/TP/lab8$ gcc -c max.c min.c
+
+3-Avec la commande ar on crée un archive nommée liboutils.a et on rajoute dans cet archive les fichiers object des deux fonction max et min:
+safia@ubuntu:~/Documents/TP/lab8$ ar -cr liboutils.a max.o min.o 
+l'option c pour create et l'option r pour replace ( remplacer des objets dans une bibliothèque si ils existent dans la
+bibliothèque)
+
+4- Vérification de la liste des fichiers objet dans l’archive liboutils.a:
+safia@ubuntu:~/Documents/TP/lab8$ ar -t liboutils.a
+max.o
+min.o
+
+
+5- Génération de l'un indexe pour l’archive via la commande ranlib :
+safia@ubuntu:~/Documents/TP/lab8$ ranlib liboutils.a
+
+Cette commande sert a créer un index des ressources présentes dans notre bibliothèque statique et d’incorporer cet index à l’intérieur de notre bibliothèque. Cela peut permettre d’accélérer substantiellement la phase d’édition des liens.
+
+6- Création d'un fichier main.c permettant de créer et d’initialiser un tableau de 7 éléments et qui appelle les fonctions max et min
+safia@ubuntu:~/Documents/TP/lab8$ gedit main.c
+
+
+Le code :
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"max.h"
+#include"min.h"
+
+
+int main ()
+{
+	int nbr_value;
+	int max;
+	int min;
+
+	int tab[7]={13,12,5,1,19,13,17};
+
+	printf("Nombre d\'elements ? "); 
+	scanf ("%d", &nbr_value);
+
+		
+	find_max(tab,nbr_value, &max); 
+	printf ("Max = %d\n", max);
+
+	find_min(tab,nbr_value, &min); 
+	printf ("Min = %d\n", min);
+
+	
+	return 0;
+}
+
+
+Compilation et exécusion :
+safia@ubuntu:~/Documents/TP/lab8$ gcc main.c min.c max.c -o main
+safia@ubuntu:~/Documents/TP/lab8$ ./main
+
+7- Création de deux répertoires include et lib dans notre répertoire /opt
+
+safia@ubuntu:~/Documents/TP/lab8$ cd /opt
+safia@ubuntu:/opt$ sudo mkdir include
+safia@ubuntu:/opt$ sudo mkdir lib
+
+8- Avec la commande mv, on déplace les fichiers max.h et min.h dans include 
+
+safia@ubuntu:~$ sudo mv Documents/TP/lab8/min.h /opt/include
+safia@ubuntu:~$ sudo mv Documents/TP/lab8/max.h /opt/include
+
+Déplacer avec la commande mv le fichier liboutils.a dans lib
+
+safia@ubuntu:~$ sudo mv Documents/TP/lab8/liboutils.a /opt/lib
+safia@ubuntu:~$ cd /opt
+safia@ubuntu:/opt$ ls
+include  lab6.sh  lib  
+
+( lab6.sh le fichier deplacé dans le LAB6)
+
+9- On supprime tous les fichiers .o, mac.c et min.c dans le répertoire courant
+safia@ubuntu:~/Documents/TP/lab8$ rm *.o
+safia@ubuntu:~/Documents/TP/lab8$ rm max.c min.c
+
+Compilation du fichier main pour créer l’exécutable final en faisant appel à la
+bibliothèque liboutils que j'ai créée précédemment.
+
+safia@ubuntu:~/Documents/TP/lab8$ gcc main.c -L/opt/lib -I/opt/include -loutils -o main.exe
+
+10- On teste le bon fonctionnement du programme
+safia@ubuntu:~/Documents/TP/lab8$ ./main.exe
+
+11- Ajout de la fonction arithmétique var.c dans la bibliothèque liboutils.a 
+Récupération du fichier var.c :safia@ubuntu:~/Documents/TP/lab7/function$ cp /home/safia/Documents/TP/lab7/function/var.c /home/safia/Documents/TP/lab8
+Compilation du fichier :safia@ubuntu:~/Documents/TP/lab8$ gcc -c var.c
+L'ajout de cette fonction à la bibliothèque : 
+safia@ubuntu:~/Documents/TP/lab8$ sudo cp var.o /opt/lib 
+safia@ubuntu:/opt/lib$ sudo ar -r liboutils.a var.o
+
+12- Verification de la présence du fichier var.o dans la bibliothèque :
+safia@ubuntu:/opt/lib$ ar -t liboutils.a
+max.o
+min.o
+var.o
+
+13- Utilisation de la commande ranlib et nm pour mettre à jour l'indexe et vérification de la présence des fichiers.o des fonctions:
+
+safia@ubuntu:/opt/lib$ sudo ranlib liboutils.a
+[sudo] Mot de passe de safia : 
+safia@ubuntu:/opt/lib$ nm -s liboutils.a
+
+Indexe de l'archive :
+find_max in max.o
+find_min in min.o
+variance in var.o
+
+14- Utilisation de la fonction var.c dans le main.
+
+Pour compiler :safia@ubuntu:~/Documents/TP/lab8$ gcc main.c -L/opt/lib -I/opt/include -loutils -o main.exe
+Pour éxecuter :safia@ubuntu:~/Documents/TP/lab8$ ./main.exe
+
+
+15- Utilisation des fonctions ceil et floor dans le main afin d'arrondir le resultat de la variance:
+=>le code
+ 
+#include<stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include"max.h"
+#include"min.h"
+#include"var.h"
+
+
+int main ()
+{
+	int nbr_value;
+	int max;
+	int min;
+	float  var;
+	int tab[7]={13,12,5,1,19,13,17};
+
+	printf("Nombre d\'elements ? "); 
+	scanf ("%d", &nbr_value);
+
+		
+	find_max(tab,nbr_value, &max); 
+	printf ("Max = %d\n", max);
+
+	find_min(tab,nbr_value, &min); 
+	printf ("Min = %d\n", min);
+	
+	variance(tab,nbr_value, &var); 
+	printf( "L'arrondi sup: %g\n", ceilf ( var) );
+	printf( "L'arrondi inf: %g\n", floorf (var) );
+	printf ("Var = %f\n", var);
+	
+	
+	return 0;
+}
+
+
+16- Compilation et exécusion de notre programme
+safia@ubuntu:~/Documents/TP/lab8$ gcc main.c -L/opt/lib -I/opt/include -loutils -o main.exe -lm
+safia@ubuntu:~/Documents/TP/lab8$ ./main.exe
+
+
+
+

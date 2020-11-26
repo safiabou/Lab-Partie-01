@@ -1,0 +1,280 @@
+LAB 7 : Compilation sous GCC, Débogage
+
+
+
+1- Écrire une fonction max en C permettant de calculer la valeur max d’un tableau contenant N
+entier.
+
+=> le code: 
+a.Fonction max.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"max.h"
+
+
+void find_max (int t[], int n, int *max)
+{
+	int max_value;
+	int i;
+	max_value = t[0];
+	for (i=0; i<n; i++)
+	{
+		if (t[i] > max_value)
+		{
+			max_value = t[i];
+		}
+	}
+	
+	*max = max_value;
+}
+
+b.Fonction max.h
+
+#ifndef H_max
+#define H_max
+
+void find_max (int t[], int n, int *max);
+
+#endif
+
+
+c.Fonction testmax.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"max.h"
+
+int main ()
+{
+	int nbr_value;
+	int  max;
+	int tab[5]={2,5,7,2,9};
+
+	printf("Nombre d\'elements ? "); 
+	scanf ("%d", &nbr_value);
+
+	find_max(tab, nbr_value, &max);
+	printf ("Max = %d\n", max);
+
+	return 0;
+}
+
+2- Compiler et tester le code en faisant appel au compilateur gcc en tapant la commande :
+safia@ubuntu:~/Documents/TP/lab7/maxfunction$ gcc max.c testmax.c -o maximum
+On exécute avec la commande: ./maximum
+On poux faire appel au débogueur ddd, pour mon cas j'ai utilisé le codblocks. Je l'ai installé en tappant la commande :
+
+sudo apt install codeblocks
+
+3- Utiliser les options -E , -S et -c pour générer les fichiers de compilations intermédiaires:
+Preprocessing :safia@ubuntu:~/Documents/TP/lab7/maxfunction$ gcc -E testmax.c -o testmax.i
+
+Compilation proprement dite : safia@ubuntu:~/Documents/TP/lab7/maxfunction$ gcc -S testmax.i
+
+L'assemblage: safia@ubuntu:~/Documents/TP/lab7/maxfunction$ gcc -c testmax.s
+                                         
+
+4- Listez les extensions des fichiers intermédiaires générés : safia@ubuntu:~/Documents/TP/lab7/maxfunction$ ls -a
+
+Explication de l’action réalisé par le compilateur dans chacune de ces étapes qui sont ( Preprocessing et compilation )
+
+=> Dans la preprocessing le compilateur remplace les valeurs dans le code, supprime les commentaire, inclue les fichiers .h et génère un fichier .i qui est encapsulé puis le résultat du post-process est directement passé au compilateur.
+=>Compilation : 2 étapes Compilation proprement dite & assemblage
+
+Compilation proprement dite : Ici le compilateur prend le code fourni par l'etape précedente, et le traduit en assembleur ( fichier .s).
+
+Assemblage: Dans cette étape le compilateur prend le code génèré par l'assembleur et le transforme en fichier binaire ( fichier.o), mais aprés cette partie le fichier n'est toujours pas exécutable.
+
+5- C'est au niveau de la compilation plus exactement au niveau de l'assemblage que la fonction maxmin sera remplacer
+par le binaire ( aprés la commande gcc -c testmax.s )
+
+
+6- Écrire une fonction min en C permettant de calculer la valeur min d’un tableau contenant N entier
+
+=> Le programme 
+
+a.Fonction min.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"min.h"
+
+
+void find_min (int t[], int n, int *min)
+{
+	int min_value;
+	int i;
+	min_value = t[0];
+	for (i=0; i<n; i++)
+	{
+		if (t[i] < min_value)
+		{
+			min_value = t[i];
+		}
+	}
+	
+	*min = min_value;
+}
+
+
+b.Fonction min.h
+
+#ifndef H_min
+#define H_min
+
+void find_min (int t[], int n, int *min);
+
+
+#endif
+
+c.Fonction testmin.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"min.h"
+
+int main ()
+{
+	int nbr_value;
+	int  min;
+	int tab[5]={2,5,7,2,9};
+
+	printf("Nombre d\'elements ? "); 
+	scanf ("%d", &nbr_value);
+
+	find_min(tab, nbr_value, &min);
+	printf ("Min = %d\n", min);
+
+	return 0;
+}
+
+
+
+=> compilation et l'exécusion du code à l'aide des commande suivante :
+safia@ubuntu:~/Documents/TP/lab7/minfunction$ gcc min.c testmin.c -o minimum
+safia@ubuntu:~/Documents/TP/lab7/minfunction$ ./minimum
+Nombre d'elements ? 5
+Min = 2
+
+7- Écrire une fonction variance en C permettant de calculer la variance d’un tableau T de dimension N
+=> Le code 
+
+a.Fonction var.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"var.h"
+#include <math.h>
+
+
+void variance (int t[], int n, float *var)
+{
+
+	int sum, Avr;
+	float va;
+	int i,j;
+	int somme=0;
+	sum = 0;
+	for (j=0; j<n; j++)
+	{
+		sum = sum + t[j];
+
+	}
+	Avr= sum / n;
+
+	for(i=1; i<(n+1);i++)
+	{
+
+        printf("%d\n",(t[i]-Avr)*(t[i]-Avr));
+		somme= somme + (t[i]-Avr)*(t[i]-Avr);
+	}
+
+	va=somme/n;
+	*var= va;
+}
+
+
+b.Fonction var.h
+
+#ifndef H_var
+#define H_var
+
+void variance (int t[], int n, float *var);
+
+#endif
+
+c.Fonction testvar.c
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"var.h"
+
+
+int main ()
+{
+	int nbr_value;
+	float  var;
+	int tab[5]={2,5,7,2,9};
+
+	printf("Nombre d\'elements ? "); 
+	scanf ("%d", &nbr_value);
+
+	variance(tab, nbr_value, &var);
+	printf ("Var = %f\n", var);
+
+	return 0;
+}
+
+
+
+
+=> compilation et l'exécusion du code à l'aide des commande suivante :
+safia@ubuntu:~/Documents/TP/lab7/varfunction$ gcc var.c testvar.c -o variance
+safia@ubuntu:~/Documents/TP/lab7/varfunction$ ./variance
+
+8- Créer un fichier test permettant de créer et initialiser un tableau de 10 éléments avec les valeurs suivantes: 4 9 10 11 12 15 12 9 0 30. Calculer et afficher le max, min et la variance
+
+
+=> Le programme 
+
+#include<stdio.h>
+#include <stdlib.h>
+#include"var.h"
+#include"max.h"
+#include"min.h"
+
+
+int main ()
+{
+	int nbr_value;
+	float  var;
+	int max;
+	int min;
+
+	int tab[10]={4,9,10,11,12,15,12,9,0,30};
+
+	printf("Nombre d\'elements ? "); 
+	scanf ("%d", &nbr_value);
+
+		
+	find_max(tab,nbr_value, &max); 
+	printf ("Max = %d\n", max);
+
+	find_min(tab,nbr_value, &min); 
+	printf ("Min = %d\n", min);
+
+	variance(tab,nbr_value, &var); 
+	printf ("Var = %f\n", var);
+	
+	return 0;
+}
+
+
+=> compilation et l'exécusion du code à l'aide des commandes suivantes:
+le compiler et l'éxécuter : safia@ubuntu:~/Documents/TP/lab7/function$ gcc max.c min.c var.c test.c -o test
+safia@ubuntu:~/Documents/TP/lab7/function$ ./test
+
+
+
+
